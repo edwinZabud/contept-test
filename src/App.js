@@ -17,7 +17,7 @@ function App() {
   const [messageOutput, setMessageOutput] = useState("");
   const [formInputs, setFormInputs] = useState([]);
   const [age, setAge] = useState("");
-  const [arregloObjetos, setArregloObjetos] = useState([ ]);
+  const [arregloObjetos, setArregloObjetos] = useState([]);
 
   const handleMessage = (event) => {
     console.log(
@@ -64,74 +64,88 @@ function App() {
   useEffect(() => {
     console.log("Previo ", arregloObjetos);
     setArregloObjetos(
-      [...formInputs?.map((item, index) => {
-        if(!arregloObjetos.some(obj => obj.id === item)){ 
-          return {id: item, value: item?.value};
+      formInputs?.map((item, index) => {
+        if (!arregloObjetos.some((obj) => obj.id === item)) {
+          return { id: item, value: item?.value };
         }
 
         return arregloObjetos[index];
-      })]
+      }) || []
     );
 
     console.log("arreglo estado ", formInputs);
   }, [formInputs]);
 
   return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
-      }}
-      noValidate
-      autoComplete="off"
-      className="form-wrapper"
-    >
-      <Stack direction="column" spacing={2}>
+    <Stack className="form-wrapper" direction="row" spacing={2}>
+      <Stack direction="column" spacing={2} sx={{width: '100%'}}>
         <TextField
           id="outlined-multiline-static"
-          label="Multiline"
+          label="Input"
           multiline
           rows={4}
           value={message}
           onChange={handleMessage}
+          fullWidth
         />
 
         <hr />
 
         {arregloObjetos?.map((item) => (
-          <div key={item.id}>
-            <label id="demo-simple-select-label">Value <strong>{item.id}</strong> </label>
-            <select
+          <FormControl fullWidth key={item.id}>
+            <InputLabel id="demo-simple-select-label">
+              [<strong>{item.id}</strong>]
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={item.value}
               label="Age"
               onChange={(event) =>
-                actualizarObjetoPorId(
-                  item.id,
-                  event.target.value
-                )
+                actualizarObjetoPorId(item.id, event.target.value)
               }
             >
-              <option value={""}>Select</option>
-              <option value={"Edwin"}>Edwinsky</option>
-              <option value={"Camilosky"}>Camilosky</option>
-              <option value={"Juliosky"}>Juliosky</option>
-            </select>
-          </div>
+              <MenuItem value={""}>Select</MenuItem>
+              <MenuItem value={"Edwin"}>Edwin</MenuItem>
+              <MenuItem value={"Camilo"}>Camilo</MenuItem>
+              <MenuItem value={"Julio"}>Julio</MenuItem>
+            </Select>
+          </FormControl>
+
+          // <div key={item.id}>
+          //   <label id="demo-simple-select-label">Value <strong>{item.id}</strong> </label>
+          //   <select
+          //     id="demo-simple-select"
+          //     value={item.value}
+          //     label="Age"
+          //     onChange={(event) =>
+          //       actualizarObjetoPorId(
+          //         item.id,
+          //         event.target.value
+          //       )
+          //     }
+          //   >
+          //     <option value={""}>Select</option>
+          //     <option value={"Edwin"}>Edwinsky</option>
+          //     <option value={"Camilosky"}>Camilosky</option>
+          //     <option value={"Juliosky"}>Juliosky</option>
+          //   </select>
+          // </div>
         ))}
       </Stack>
       <hr />
-      <div>
+      <div style={{width: '100%'}}>
         <TextField
           id="outlined-multiline-static"
-          label="Multiline"
+          label="Output"
           multiline
           rows={4}
           value={messageOutput}
           aria-readonly
+          fullWidth
         />
       </div>
-    </Box>
+    </Stack>
   );
 }
 

@@ -13,7 +13,7 @@ export function reemplazarValoresEntreLlaves(cadena, valores) {
 
     // Verificamos si el índice es válido y existe en el arreglo de valores.
     if (valorEncontrado !== undefined) {                
-      return valorEncontrado.value;
+      return valorEncontrado.value || match;
     } else {
       // Si el índice no es válido, simplemente retornamos la coincidencia original.
       return match;
