@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.form-wrapper {
+  background: rgb(214, 214, 214);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
